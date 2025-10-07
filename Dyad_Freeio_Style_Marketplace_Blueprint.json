@@ -1,0 +1,100 @@
+{
+  "project_name": "Dyad Freeio-style Marketplace",
+  "project_description": "Freelance & Employer Marketplace (Freeio Home-2 style) with job board, services, projects, resumes, packages, identity verification, wallets, Payoneer/Stripe, maps (Here/Google/Mapbox), and fine-grained access restrictions.",
+  "stack": {
+    "frontend": "React + Tailwind CSS",
+    "backend": "Node.js + Express",
+    "database": "PostgreSQL",
+    "auth": "OAuth2 + JWT",
+    "payments": [
+      "Payoneer",
+      "Stripe"
+    ],
+    "storage": "AWS S3 or Supabase",
+    "notifications": "SendGrid + WebSocket",
+    "hosting": {
+      "frontend": "Vercel",
+      "backend": "Render / AWS"
+    }
+  },
+  "roles": [
+    "Admin",
+    "Employer",
+    "Freelancer",
+    "Guest"
+  ],
+  "feature_flags": {
+    "fields_manager": true,
+    "restrict_job_view_options": [
+      "All (Users, Guests)",
+      "All Registered Users",
+      "Register Freelancers",
+      "Always Hidden"
+    ],
+    "restrict_freelancer_view_options": [
+      "All (Users, Guests)",
+      "All Registered Users",
+      "Only Applicants",
+      "Register Employers",
+      "Register Employers with package",
+      "Always Hidden"
+    ],
+    "restrict_contact_info_options": [
+      "All (Users, Guests)",
+      "All Registered Users",
+      "Only Applicants",
+      "Register Employers",
+      "Employer With Contact Package",
+      "Always Hidden"
+    ],
+    "restrict_employer_view_options": [
+      "All (Users, Guests)",
+      "All Registered Users",
+      "Only Applicants",
+      "Register Freelancers",
+      "Always Hidden"
+    ],
+    "frontend_add_forms": {
+      "add_project": true,
+      "add_service": true,
+      "add_job": true
+    },
+    "maps": [
+      "HereMaps",
+      "GoogleMaps",
+      "Mapbox"
+    ],
+    "social_logins": [
+      "Facebook",
+      "Google",
+      "Twitter",
+      "LinkedIn"
+    ],
+    "social_apply_job": true,
+    "listing_shortcodes": [
+      "List",
+      "Search",
+      "AdvancedSearch",
+      "SimpleSearch",
+      "ResumeList",
+      "ResumeAdvancedSearch"
+    ],
+    "woo_compatible": true,
+    "translation_ready": true,
+    "one_click_demo_import": true,
+    "responsive_retina": true
+  },
+  "timeline_estimate": {
+    "phase_1": "System scaffold + Auth + Fields Manager (2 weeks)",
+    "phase_2": "Listings, frontend add forms, search (3 weeks)",
+    "phase_3": "Dashboards (freelancer/employer) + messaging (3 weeks)",
+    "phase_4": "Wallets, payouts, packages, restrictions (3 weeks)",
+    "phase_5": "Admin panel, demo import & theme options (2 weeks)",
+    "phase_6": "Maps integration, testing, launch (2 weeks)",
+    "total": "15 weeks"
+  },
+  "notes": {
+    "demo_reference": "Scaffolded to match Freeio Home-2 demo layouts and features (listing templates, shortcodes, social login, map providers, front-end add forms, packages & restrictions).",
+    "source_example": "https://demoapus1.com/freeio/home-2/"
+  }
+}
