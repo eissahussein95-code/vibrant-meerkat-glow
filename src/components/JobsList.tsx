@@ -16,7 +16,11 @@ interface Job {
   employer_id: string;
 }
 
-const JobsList = () => {
+interface JobsListProps {
+  searchTerm: string;
+}
+
+const JobsList: React.FC<JobsListProps> = ({ searchTerm }) => {
   const { supabase, session } = useSession();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,10 +33,16 @@ const JobsList = () => {
       }
 
       setLoading(true);
-      const { data, error } = await supabase
+      let query = supabase
         .from('jobs')
         .select('*')
         .order('created_at', { ascending: false });
+
+      if (searchTerm) {
+        query = query.or(`title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
+      }
+
+      const { data, error } = await query;
 
       if (error) {
         showError(`Failed to fetch jobs: ${error.message}`);
@@ -44,7 +54,7 @@ const JobsList = () => {
     };
 
     fetchJobs();
-  }, [session, supabase]);
+  }, [session, supabase, searchTerm]);
 
   if (loading) {
     return (
@@ -56,6 +66,10 @@ const JobsList = () => {
 
   if (!session) {
     return <p className="text-center text-gray-600 dark:text-gray-300">Please log in to view jobs.</p>;
+  }
+
+  if (jobs.length === 0 && searchTerm) {
+    return <p className="text-center text-gray-600 dark:text-gray-300">No jobs found matching "{searchTerm}".</p>;
   }
 
   if (jobs.length === 0) {
