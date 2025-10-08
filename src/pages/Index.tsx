@@ -1,6 +1,7 @@
 import { MadeWithDyad } from "@/components/made-with-dyad";
 import { useSession } from "@/components/SessionContextProvider";
-import { Button } from "@/components/ui/button"; // Assuming you have a Button component
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom"; // Import Link
 
 const Index = () => {
   const { session, supabase } = useSession();
@@ -18,9 +19,16 @@ const Index = () => {
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-4">
               You are logged in as: {session.user?.email}
             </p>
-            <Button onClick={handleLogout} className="mt-4">
-              Logout
-            </Button>
+            <div className="flex flex-col space-y-4 mt-6">
+              <Button onClick={handleLogout}>
+                Logout
+              </Button>
+              <Link to="/add-job">
+                <Button variant="secondary">
+                  Post a New Job
+                </Button>
+              </Link>
+            </div>
           </>
         ) : (
           <p className="text-xl text-gray-600 dark:text-gray-300">

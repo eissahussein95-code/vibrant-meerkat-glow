@@ -5,8 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import Login from "./pages/Login"; // Import the new Login page
-import { SessionContextProvider } from "./components/SessionContextProvider"; // Import the new SessionContextProvider
+import Login from "./pages/Login";
+import AddJob from "./pages/AddJob"; // Import the new AddJob page
+import { SessionContextProvider } from "./components/SessionContextProvider";
 
 const queryClient = new QueryClient();
 
@@ -16,10 +17,11 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <SessionContextProvider> {/* Wrap routes with SessionContextProvider */}
+        <SessionContextProvider>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} /> {/* Add the Login route */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/add-job" element={<AddJob />} /> {/* Add the AddJob route */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
