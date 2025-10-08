@@ -6,7 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
-import AddJob from "./pages/AddJob"; // Import the new AddJob page
+import AddJob from "./pages/AddJob";
+import Jobs from "./pages/Jobs"; // Import the new Jobs page
 import { SessionContextProvider } from "./components/SessionContextProvider";
 
 const queryClient = new QueryClient();
@@ -21,7 +22,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/add-job" element={<AddJob />} /> {/* Add the AddJob route */}
+            <Route path="/add-job" element={<AddJob />} />
+            <Route path="/jobs" element={<Jobs />} /> {/* Add the Jobs route */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

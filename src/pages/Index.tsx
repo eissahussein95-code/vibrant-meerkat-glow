@@ -1,7 +1,7 @@
 import { MadeWithDyad } from "@/components/made-with-dyad";
 import { useSession } from "@/components/SessionContextProvider";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom"; // Import Link
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const { session, supabase } = useSession();
@@ -26,6 +26,11 @@ const Index = () => {
               <Link to="/add-job">
                 <Button variant="secondary">
                   Post a New Job
+                </Button>
+              </Link>
+              <Link to="/jobs">
+                <Button variant="outline">
+                  View All Jobs
                 </Button>
               </Link>
             </div>
