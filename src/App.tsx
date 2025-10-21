@@ -1,36 +1,80 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import Login from "./pages/Login";
-import AddJob from "./pages/AddJob";
-import Jobs from "./pages/Jobs"; // Import the new Jobs page
-import { SessionContextProvider } from "./components/SessionContextProvider";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import Landing from './pages/Landing';
+import About from './pages/About';
+import Pricing from './pages/Pricing';
+import Contact from './pages/Contact';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import FreelancerDashboard from './pages/FreelancerDashboard';
+import EmployerDashboard from './pages/EmployerDashboard';
+import AdminDashboard from './pages/AdminDashboard';
+import Workspace from './pages/Workspace';
+import Jobs from './pages/Jobs';
+import Profile from './pages/Profile';
+import './index.css';
 
-const queryClient = new QueryClient();
+const PrivateRoute = ({ children, allowedRoles }: { children: React.ReactNode; allowedRoles?: string[] }) => {
+  const { user, profile, loading } = useAuth();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <SessionContextProvider>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/add-job" element={<AddJob />} />
-            <Route path="/jobs" element={<Jobs />} /> {/* Add the Jobs route */}
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </SessionContextProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-pulse gradient-text text-2xl font-bold">VorixHub</div>
+      </div>
+    );
+  }
+
+  if (!user || !profile) {
+    return <Navigate to="/login" />;
+  }
+
+  if (allowedRoles && !allowedRoles.includes(profile.role)) {
+    return <Navigate to={`/${profile.role}`} />;
+  }
+
+  return <>{children}</>;
+};
+
+const AppRoutes = () => {
+  const { user, profile } = useAuth();
+
+  return (
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<Landing />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/pricing" element={<Pricing />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/login" element={user && profile ? <Navigate to={`/${profile.role}`} /> : <Login />} />
+      <Route path="/register" element={user && profile ? <Navigate to={`/${profile.role}`} /> : <Register />} />
+      
+      <Route path="/freelancer" element={<PrivateRoute allowedRoles={['freelancer']}><FreelancerDashboard /></PrivateRoute>} />
+      <Route path="/employer" element={<PrivateRoute allowedRoles={['employer']}><EmployerDashboard /></PrivateRoute>} />
+      <Route path="/admin" element={<PrivateRoute allowedRoles={['admin']}><AdminDashboard /></PrivateRoute>} />
+      
+      <Route path="/workspace/:id" element={<PrivateRoute><Workspace /></PrivateRoute>} />
+      <Route path="/jobs" element={<PrivateRoute><Jobs /></PrivateRoute>} />
+      <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+      
+      {/* Catch-all redirect */}
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
+  );
+};
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
+    </BrowserRouter>
+  );
+}
 
 export default App;

@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-neutral-800;
+  }
+  body {
+    @apply bg-neutral-950 text-neutral-50;
+    font-family: 'Inter', 'SF Pro Text', system-ui, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer utilities {
+  /* Gradient Utilities */
+  .gradient-primary {
+    background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+  }
+  .gradient-subtle {
+    background: linear-gradient(135deg, rgba(147,51,234,0.1) 0%, rgba(126,34,206,0.05) 100%);
+  }
+  .gradient-glow {
+    background: radial-gradient(circle at center, rgba(147,51,234,0.15) 0%, transparent 70%);
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Background Utilities */
+  .bg-page { @apply bg-neutral-950; }
+  .bg-surface { @apply bg-neutral-900; }
+  .bg-elevated { @apply bg-neutral-800; }
+  .bg-input { @apply bg-neutral-900; }
+  
+  /* Text Color Utilities */
+  .text-primary { @apply text-neutral-50; }
+  .text-secondary { @apply text-neutral-200; }
+  .text-tertiary { @apply text-neutral-700; }
+  .text-brand { @apply text-purple-500; }
+  
+  /* Glass Effect */
+  .glass-effect {
+    background: rgba(38, 38, 38, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(147, 51, 234, 0.1);
+  }
+  
+  /* Hover Effects */
+  .card-hover-effect {
+    @apply transition-all duration-fast;
+  }
+  .card-hover-effect:hover {
+    @apply -translate-y-1 scale-[1.01] shadow-card-hover border-purple-900;
+  }
+  
+  /* Button Hover Effect */
+  .button-hover-effect {
+    @apply transition-all duration-fast;
+  }
+  .button-hover-effect:hover {
+    @apply scale-[1.02] shadow-card-hover;
+    filter: brightness(1.1);
+  }
+  .button-hover-effect:active {
+    @apply scale-[0.98];
+    filter: brightness(0.9);
+  }
+}
